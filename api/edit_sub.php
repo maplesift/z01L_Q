@@ -25,3 +25,4 @@ if(isset($_POST['text2'])){
         }
     }
 }
+to("../admin.php?do=menu");
