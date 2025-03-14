@@ -1,19 +1,13 @@
 <?php include_once "db.php"; 
+
 $table=$_POST['table'];
 $db=ucfirst($table);
-
-unset($_POST['table']);
-
+$row=$$db->find($_POST['id']);
 if(!empty($_FILES)){
-    dd($_FILES);
+    // dd($_FILES);
     move_uploaded_file($_FILES['img']['tmp_name'],"../upload/{$_FILES['img']['name']}");
-    $_POST['img']=$_FILES['img']['name'];
+    $row['img']=$_FILES['img']['name'];
 }
-
-if(isset($_POST['pw2'])){
-    unset($_POST['pw2']);
-}
-
-$$db->save($_POST);
+$$db->save($row);
 
 to("../admin.php?do=$table");

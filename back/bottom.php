@@ -1,4 +1,3 @@
-
 <div style="width:99%; height:87%; margin:auto; overflow:auto; border:#666 1px solid;">
     <p class="t cent botli">頁尾版權資料管理</p>
 
@@ -15,10 +14,10 @@
                 <tr class="yel">
                     <!-- <td width="45%">進站總人數:</td> -->
                     <td width="30%">頁尾版權資料:
-                        
+
                     </td>
                     <td>
-                    <input type="text" name="text" value="<?=$row['text'];?>">
+                        <input type="text" name="text" value="<?=$row['text'];?>">
                     </td>
                     <!-- <td width="7%">顯示</td>
                     <td width="7%">刪除</td>
