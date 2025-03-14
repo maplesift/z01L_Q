@@ -159,3 +159,10 @@ input:focus,button:focus
 	cursor:pointer;
 	text-decoration:none;
 }
+.all{
+	display: none;
+}
+.im{
+	width: 150px;
+	height: 103px;
+}
