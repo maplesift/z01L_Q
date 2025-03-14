@@ -1,10 +1,10 @@
-<?php
+<?php 
 session_start();
-
 class db{
     protected $table;
-    protected   $pdo;
-    protected   $dsn="mysql:host=localhost;charset=utf8;dbname=db03_z01l2;";
+    protected $pdo;
+    protected $dsn="mysql:host=localhost;charset=utf8;dbname=db03;";
+    
     public function __construct($table) {
         $this->table = $table;
         $this->pdo=new pdo($this->dsn,'root','');
@@ -23,11 +23,11 @@ class db{
         return $tmp;
     }
     function all(...$array){
-        $sql = " SELECT * FROM $this->table ";
+        $sql = "SELECT * FROM $this->table ";
         if(!empty($array[0])){
             if(is_array($array[0])){
                 $where= $this->a2s($array[0]);
-                $sql .= " where ".join(" && ",$where); 
+                $sql .= " where ".join(" && ",$where);
             }else{
                 $sql .= $array[0];
             }
@@ -37,45 +37,45 @@ class db{
         return $this->fetchAll($sql);
     }
     function find($id){
-        $sql = " SELECT * FROM $this->table ";
+        $sql = "SELECT * FROM $this->table ";
         if(is_array($id)){
             $where= $this->a2s($id);
-            $sql .= " where ".join(" && ",$where); 
+            $sql .= " where ".join(" && ",$where);
         }else{
-            $sql .= " where `id`='$id' "; 
+            $sql .= " where  `id`='$id' ";
         }
         return $this->fetchOne($sql);
     }
     function del($id){
-        $sql = " DELETE FROM $this->table ";
+        $sql = "DELETE FROM $this->table ";
         if(is_array($id)){
             $where= $this->a2s($id);
-            $sql .= " where ".join(" && ",$where); 
+            $sql .= " where ".join(" && ",$where);
         }else{
-            $sql .= " where `id`='$id' "; 
+            $sql .= " where  `id`='$id' ";
         }
         return $this->pdo->exec($sql);
     }
     function save($array){
-        // update table set
+        // update table set 
         if(isset($array['id'])){
             $id=$array['id'];
             unset($array['id']);
-            $set=$this->a2s($array);
-            $sql=" UPDATE $this->table set ".join(",",$set)." where `id`='$id' ";
+            $set= $this->a2s($array);
+            $sql= " UPDATE $this->table set ".join(",",$set)." where `id`='$id' ";
         }else{
             // insert into table() values()
             $keys=array_keys($array);
-            $sql= " INSERT INTO $this->table(`".join("`,`",$keys)."`) values('".join("','",$array)."') ";
+            $sql = " INSERT INTO $this->table(`".join("`,`",$keys)."`) values('".join("','",$array)."') ";
         }
         return $this->pdo->exec($sql);
     }
     function count(...$array){
-        $sql = " SELECT count(*) FROM $this->table ";
+        $sql = "SELECT count(*) FROM $this->table ";
         if(!empty($array[0])){
             if(is_array($array[0])){
                 $where= $this->a2s($array[0]);
-                $sql .= " where ".join(" && ",$where); 
+                $sql .= " where ".join(" && ",$where);
             }else{
                 $sql .= $array[0];
             }
@@ -87,12 +87,12 @@ class db{
 }
 // db外
 function q($sql){
-    $dsn="mysql:host=localhost;charset=utf8;dbname=db03_z01l2;";
+    $dsn="mysql:host=localhost;charset=utf8;dbname=db03;";
     $pdo=new pdo($dsn,'root','');
     return $pdo->query($sql)->fetchAll();
 }
 function qCol($sql){
-    $dsn="mysql:host=localhost;charset=utf8;dbname=db03_z01l2;";
+    $dsn="mysql:host=localhost;charset=utf8;dbname=db03;";
     $pdo=new pdo($dsn,'root','');
     return $pdo->query($sql)->fetchColumn();
 }
@@ -103,21 +103,4 @@ function dd($array){
 }
 function to($url){
     header("location:".$url);
-}
-
-$Admin=new db("admin");
-$Total=new db("total");
-$Bottom=new db("bottom");
-$Title=new db("title");
-$Ad=new db("ad");
-$Mvim=new db("mvim");
-$Image=new db("image");
-$News=new db("news");
-$Menu=new db("menu");
-
-if(!isset($_SESSION['total'])){
-        $chk=$Total->find(1);
-        $chk['total']++;
-        $Total->save($chk);
-        $_SESSION['total']=1;
 }
